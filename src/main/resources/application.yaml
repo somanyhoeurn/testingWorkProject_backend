@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: testProject
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: admin
+    password: 2003
+
+
+token:
+  key: ey2Z6cAz0X+vt8yeuuu/26ByMC9w8JRQ6zw4XqYHUTS1mgMDFKCKfnjfqzxKFeLfERD4uPXCFcLRIW3pXVEfJQ==
+  ms: 3600
