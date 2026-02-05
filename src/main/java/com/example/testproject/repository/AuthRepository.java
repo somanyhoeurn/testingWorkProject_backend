@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface AuthRepository extends JpaRepository<User,Long> {
     Optional<User> findByUsername(@NotBlank(message = "username is required") String username);
+
+    boolean existsByUsername(@NotBlank(message = "Username is required") String username);
 }

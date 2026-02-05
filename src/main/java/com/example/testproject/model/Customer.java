@@ -35,7 +35,7 @@ public class Customer {
 
     private String phone;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "varchar(20)")
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private CustomerStatus status = CustomerStatus.ACTIVE;

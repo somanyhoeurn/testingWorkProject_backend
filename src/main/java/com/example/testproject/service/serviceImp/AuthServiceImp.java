@@ -8,6 +8,7 @@ import com.example.testproject.dto.response.StatusResponse;
 import com.example.testproject.dto.response.UserResponse;
 import com.example.testproject.exceptions.ApiExceptions;
 import com.example.testproject.model.User;
+import com.example.testproject.properties.CustomerStatus;
 import com.example.testproject.properties.Roles;
 import com.example.testproject.repository.AuthRepository;
 import com.example.testproject.security.JwtService;
@@ -62,6 +63,15 @@ public class AuthServiceImp implements AuthService {
                     HttpStatus.BAD_REQUEST,null
             );
         }
+
+        if (authRepository.existsByUsername(registerRequest.getUsername())) {
+            throw new ApiExceptions(
+                    new StatusResponse("USERNAME_EXISTS", "Username already exists"),
+                    HttpStatus.CONFLICT,
+                    null
+            );
+        }
+
         User user = User.builder()
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
@@ -86,6 +96,13 @@ public class AuthServiceImp implements AuthService {
                     new StatusResponse("ACCOUNT_LOCKED", "Account is locked due to multiple failed attempts"),
                     HttpStatus.FORBIDDEN,
                     Map.of("lockedUntil", user.getLockUntil().toString())
+            );
+        }
+
+        if (user.getStatus() == CustomerStatus.INACTIVE){
+            throw new ApiExceptions(
+                    new StatusResponse("ACCOUNT_INACTIVE", "Account is inactive. Please contact support."),
+                    HttpStatus.FORBIDDEN,null
             );
         }
 

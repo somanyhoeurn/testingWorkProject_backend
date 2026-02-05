@@ -46,8 +46,9 @@ public class User implements UserDetails {
     @Column(name = "lock_until")
     private Instant lockUntil;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "Varchar(20)")
     @Builder.Default
+    @Enumerated(EnumType.STRING)
     private CustomerStatus status = CustomerStatus.ACTIVE;
 
     public UserResponse toResponse(){
